@@ -1,0 +1,270 @@
+1724266949861	geckodriver	INFO	Listening on 127.0.0.1:32829
+1724266949866	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52127" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileXVCils"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724266950452	Marionette	INFO	Marionette enabled
+1724266950455	Marionette	INFO	Listening on port 35313
+Read port: 35313
+WebDriver BiDi listening on ws://127.0.0.1:52127
+1724266950584	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileXVCils/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:52127/devtools/browser/dfe17784-38c0-4e6f-8d7a-08cb6d061ff2
+1724266956414	Marionette	INFO	Stopped listening on port 35313
+1724267676226	geckodriver	INFO	Listening on 127.0.0.1:39331
+1724267676738	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "58893" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilehMxJK1"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724267677305	Marionette	INFO	Marionette enabled
+1724267677308	Marionette	INFO	Listening on port 40791
+Read port: 40791
+WebDriver BiDi listening on ws://127.0.0.1:58893
+1724267677410	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilehMxJK1/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:58893/devtools/browser/3f0448aa-396a-4ad3-9320-856948dfcf13
+1724267681804	Marionette	INFO	Stopped listening on port 40791
+1724267694864	geckodriver	INFO	Listening on 127.0.0.1:38293
+1724267695369	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "48091" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileKZK3MZ"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724267695837	Marionette	INFO	Marionette enabled
+1724267695840	Marionette	INFO	Listening on port 35081
+Read port: 35081
+WebDriver BiDi listening on ws://127.0.0.1:48091
+1724267695936	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileKZK3MZ/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:48091/devtools/browser/a8f00b34-4a48-4c82-88ab-fae148b1a6cb
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724267707327	Marionette	INFO	Stopped listening on port 35081
+1724267728493	geckodriver	INFO	Listening on 127.0.0.1:36283
+1724267728997	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "39047" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilep2z2k5"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724267729466	Marionette	INFO	Marionette enabled
+1724267729469	Marionette	INFO	Listening on port 40883
+Read port: 40883
+WebDriver BiDi listening on ws://127.0.0.1:39047
+1724267729562	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilep2z2k5/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:39047/devtools/browser/355939d5-45fa-4d5b-9181-83c15deb94eb
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268472666	geckodriver	INFO	Listening on 127.0.0.1:44159
+1724268473177	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "55399" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileTAUM9q"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268473724	Marionette	INFO	Marionette enabled
+1724268473727	Marionette	INFO	Listening on port 42523
+Read port: 42523
+WebDriver BiDi listening on ws://127.0.0.1:55399
+1724268473842	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileTAUM9q/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:55399/devtools/browser/b88f73db-f952-43e2-ab07-428144a2d939
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268523431	Marionette	INFO	Stopped listening on port 42523
+JavaScript error: resource://gre/modules/AsyncShutdown.sys.mjs, line 576: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1724268523656	Marionette	INFO	Stopped listening on port 40883
+1724268542260	geckodriver	INFO	Listening on 127.0.0.1:47503
+1724268542770	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "57017" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileNYitmJ"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268543256	Marionette	INFO	Marionette enabled
+1724268543259	Marionette	INFO	Listening on port 35097
+Read port: 35097
+WebDriver BiDi listening on ws://127.0.0.1:57017
+1724268543357	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNYitmJ/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:57017/devtools/browser/7b80e039-ec9b-4b77-bdd7-0d80b0cb6f61
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268694940	geckodriver	INFO	Listening on 127.0.0.1:55477
+1724268695445	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "33859" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile377fSX"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268695906	Marionette	INFO	Marionette enabled
+1724268695909	Marionette	INFO	Listening on port 42051
+Read port: 42051
+WebDriver BiDi listening on ws://127.0.0.1:33859
+1724268696006	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile377fSX/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:33859/devtools/browser/4492f339-6f63-4ddd-a73c-9bf2b3e04975
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268720524	geckodriver	INFO	Listening on 127.0.0.1:55329
+1724268720537	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52925" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilewBHUv7"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268721178	Marionette	INFO	Marionette enabled
+1724268721182	Marionette	INFO	Listening on port 39767
+Read port: 39767
+WebDriver BiDi listening on ws://127.0.0.1:52925
+1724268721300	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilewBHUv7/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:52925/devtools/browser/6cbd8925-9b78-4250-b7d8-a88e3bffa81d
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268736894	geckodriver	INFO	Listening on 127.0.0.1:57617
+1724268737405	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "49933" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilepAKUIx"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268737911	Marionette	INFO	Marionette enabled
+1724268737913	Marionette	INFO	Listening on port 35301
+WebDriver BiDi listening on ws://127.0.0.1:49933
+Read port: 35301
+1724268738123	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilepAKUIx/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:49933/devtools/browser/fc5d418b-6b88-46bd-865e-08c26d82836a
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268747305	Marionette	INFO	Stopped listening on port 35301
+1724268747526	Marionette	INFO	Stopped listening on port 35097
+1724268747544	Marionette	INFO	Stopped listening on port 39767
+1724268747794	Marionette	INFO	Stopped listening on port 42051
+1724268820113	geckodriver	INFO	Listening on 127.0.0.1:41793
+1724268820622	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "48621" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileLcRD1j"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268821117	Marionette	INFO	Marionette enabled
+1724268821120	Marionette	INFO	Listening on port 40181
+Read port: 40181
+WebDriver BiDi listening on ws://127.0.0.1:48621
+1724268821238	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileLcRD1j/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:48621/devtools/browser/d6b98014-f79a-47ab-a21f-412a0e2c3818
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268917073	Marionette	INFO	Stopped listening on port 40181
+1724268918906	geckodriver	INFO	Listening on 127.0.0.1:34121
+1724268919416	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "56337" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileKsbIYy"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268919873	Marionette	INFO	Marionette enabled
+1724268919876	Marionette	INFO	Listening on port 41063
+Read port: 41063
+WebDriver BiDi listening on ws://127.0.0.1:56337
+1724268919977	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileKsbIYy/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:56337/devtools/browser/e0746731-e02c-48a3-97d7-63268611cab1
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724268931885	Marionette	INFO	Stopped listening on port 41063
+1724268938587	geckodriver	INFO	Listening on 127.0.0.1:40913
+1724268939097	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "58115" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile1cmGZz"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724268939547	Marionette	INFO	Marionette enabled
+1724268939549	Marionette	INFO	Listening on port 38911
+Read port: 38911
+WebDriver BiDi listening on ws://127.0.0.1:58115
+1724268939647	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile1cmGZz/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:58115/devtools/browser/2360f9aa-aa36-46df-aab3-e2be4fcd0314
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724269122378	Marionette	INFO	Stopped listening on port 38911
+1724269124047	geckodriver	INFO	Listening on 127.0.0.1:46301
+1724269124552	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "57431" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileiL8TZ5"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724269125011	Marionette	INFO	Marionette enabled
+1724269125013	Marionette	INFO	Listening on port 43987
+Read port: 43987
+WebDriver BiDi listening on ws://127.0.0.1:57431
+1724269125114	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileiL8TZ5/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:57431/devtools/browser/b79b712a-7c8c-4885-af41-24874e7b3a69
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724270004459	geckodriver	INFO	Listening on 127.0.0.1:54861
+1724270004966	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "49111" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileiRVsUx"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724270005428	Marionette	INFO	Marionette enabled
+1724270005431	Marionette	INFO	Listening on port 37689
+Read port: 37689
+WebDriver BiDi listening on ws://127.0.0.1:49111
+1724270005528	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileiRVsUx/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:49111/devtools/browser/078ee213-ce81-413c-a56a-5f19574739c3
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724270025954	Marionette	INFO	Stopped listening on port 37689
+1724270615722	Marionette	INFO	Stopped listening on port 43987
+1724270617025	geckodriver	INFO	Listening on 127.0.0.1:49231
+1724270617536	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "37195" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileliNaBs"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724270618032	Marionette	INFO	Marionette enabled
+1724270618036	Marionette	INFO	Listening on port 40667
+Read port: 40667
+WebDriver BiDi listening on ws://127.0.0.1:37195
+1724270618142	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileliNaBs/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:37195/devtools/browser/042d4ece-eeb7-4693-8da4-ff4218ea6813
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724270650911	geckodriver	INFO	Listening on 127.0.0.1:51377
+1724270651416	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "40225" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileSMtP6q"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724270651874	Marionette	INFO	Marionette enabled
+1724270651878	Marionette	INFO	Listening on port 44159
+Read port: 44159
+WebDriver BiDi listening on ws://127.0.0.1:40225
+1724270651978	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileSMtP6q/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:40225/devtools/browser/51862185-c9c7-44d3-8190-cfd8c7423b41
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1724270692264	geckodriver	INFO	Listening on 127.0.0.1:59419
+1724270692768	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "44471" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMprkcL"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1724270693219	Marionette	INFO	Marionette enabled
+1724270693222	Marionette	INFO	Listening on port 34109
+Read port: 34109
+WebDriver BiDi listening on ws://127.0.0.1:44471
+1724270693322	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMprkcL/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:44471/devtools/browser/dd57a362-4046-463d-a412-7eb29d342bad
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
