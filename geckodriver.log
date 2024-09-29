@@ -6749,3 +6749,67 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 [ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
 DevTools listening on ws://127.0.0.1:47509/devtools/browser/263e2a58-af66-43dc-ae41-740d1a0dc6ad
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1727607587610	geckodriver	INFO	Listening on 127.0.0.1:49651
+1727607588111	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "44015" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileHMiD7u"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1727607588772	Marionette	INFO	Marionette enabled
+1727607588775	Marionette	INFO	Listening on port 43845
+Read port: 43845
+WebDriver BiDi listening on ws://127.0.0.1:44015
+1727607588917	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileHMiD7u/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:44015/devtools/browser/0524cd33-b10b-400e-8860-65efe579ab06
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1727607624059	Marionette	INFO	Stopped listening on port 43845
+1727607668104	geckodriver	INFO	Listening on 127.0.0.1:57057
+1727607668608	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52073" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMtKDYk"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1727607669075	Marionette	INFO	Marionette enabled
+1727607669078	Marionette	INFO	Listening on port 36037
+Read port: 36037
+WebDriver BiDi listening on ws://127.0.0.1:52073
+1727607669184	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMtKDYk/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:52073/devtools/browser/6d6258b4-cc75-47ed-8d4b-0867a649cdc8
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+JavaScript error: resource://gre/actors/ContentMetaChild.jsm, line 183: InvalidStateError: JSWindowActorChild.sendAsyncMessage: JSWindowActorChild cannot send at the moment
+1727608439616	geckodriver	INFO	Listening on 127.0.0.1:34173
+1727608440121	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "40045" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilePFLGMr"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1727608440642	Marionette	INFO	Marionette enabled
+1727608440645	Marionette	INFO	Listening on port 45539
+Read port: 45539
+WebDriver BiDi listening on ws://127.0.0.1:40045
+1727608440780	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilePFLGMr/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:40045/devtools/browser/cb92618e-3446-47a0-87c3-d23b13379c58
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://be.tournamentsoftware.com."
+1727608496449	Marionette	INFO	Stopped listening on port 45539
+1727608496628	Marionette	INFO	Stopped listening on port 36037
+1727608702214	geckodriver	INFO	Listening on 127.0.0.1:56639
+1727608702719	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "56947" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilehVIwWK"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: libpci missing
+1727608703187	Marionette	INFO	Marionette enabled
+1727608703189	Marionette	INFO	Listening on port 43899
+Read port: 43899
+WebDriver BiDi listening on ws://127.0.0.1:56947
+1727608703293	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilehVIwWK/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:56947/devtools/browser/50ccaaab-7573-486e-beba-a159f99bb7a1
+1727608704716	Marionette	INFO	Stopped listening on port 43899
