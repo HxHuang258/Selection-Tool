@@ -1,10 +1,11 @@
-import time
-from datetime import datetime, timedelta
-# Python script to write a line to a new txt file
-file_path = "output-test.txt"
+from datetime import datetime
+import os
 
-# Write to the file
+# Get the absolute path to the GitHub Actions workspace root
+file_path = "Data-Collection/output.txt"
+
+# Write the file
 with open(file_path, "w") as file:
-    file.write(f"This is a new line of text written by Github Actions at time: {datetime.now()}.\n")
+    file.write(f"This is a new line of text written by GitHub Actions at {datetime.now()}.\n")
 
-print(f"Successfully wrote to {file_path}")
+print(f"✅ Successfully wrote to {file_path}")
