@@ -19,7 +19,7 @@ jobs:
           python-version: "3.x"
 
       - name: Run Python script
-        run: python write_text.py
+        run: python actions-test.py
 
       - name: Commit and push changes
         run: |
