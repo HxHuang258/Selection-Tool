@@ -1,4 +1,4 @@
-name: Write Text File
+name: Append to test txt File
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  write-text:
+  append-text:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,12 +18,19 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Run Python script
+      - name: Run Python script from Data-Collection directory
         run: python Data-Collection/actions-test.py
 
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git commit -m "Auto-update output.txt [skip ci]" || echo "No changes to commit"
-          git push
+
+          # Ensure output.txt exists in Data-Collection before committing
+          if [ -f "Data-Collection/output.txt" ]; then
+            git add Data-Collection/output.txt
+            git commit -m "Auto-append Data-Collection/output.txt [skip ci]" || echo "No changes to commit"
+            git push
+          else
+            echo "❌ Data-Collection/output.txt not found, skipping commit."
+          fi

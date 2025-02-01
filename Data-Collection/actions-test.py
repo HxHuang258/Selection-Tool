@@ -1,8 +1,9 @@
 from datetime import datetime
 import os
 
-# Get the absolute path to the GitHub Actions workspace root
-file_path = "Data-Collection/output.txt"
+# Define the file path inside the Data-Collection directory
+base_dir = os.path.join(os.getenv("GITHUB_WORKSPACE", ""), "Data-Collection")
+file_path = os.path.join(base_dir, "output.txt")
 
 # Write the file
 with open(file_path, "w") as file:
