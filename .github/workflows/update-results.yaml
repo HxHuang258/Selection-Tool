@@ -1,8 +1,8 @@
 name: Append to Output File
 
 on:
-  schedule:
-    - cron: "*/2 * * * *"  # Runs every 2 minutes
+  #schedule:
+  #  - cron: "*/2 * * * *"  # Runs every 2 minutes
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
