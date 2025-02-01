@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # Ensure we use our own token
+          persist-credentials: false  # Disable default credentials
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -33,6 +33,8 @@ jobs:
           git add Data-Collection/output.txt
           git commit -m "Auto-append Data-Collection/output.txt [skip ci]" || echo "No changes to commit"
 
-          # Use GitHub Actions authentication with the correct token
+          # Authenticate using GitHub Actions token
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           git push origin HEAD:main
+
 
