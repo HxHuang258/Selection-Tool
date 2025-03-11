@@ -37,10 +37,29 @@ app.get("/test-query", (req, res) => {
         return res.status(500).json({ error: error.message });
       }
       res.json({ message: "Query successful", 
-        data: results.map(result => ({ Tournament: result.Tournament })) 
+        data: results
     });
     });
   });
+
+  app.get("/search-matches", (req, res) => {
+    const gender = req.query.gender; // ✅ Use req.query instead of req.body
+
+    if (!gender) {
+        return res.status(400).json({ error: "Gender is required as a query parameter." });
+    }
+
+    const sqlQuery = "SELECT * FROM all_matches WHERE JSON_CONTAINS(Team1_Gender, ?)";
+
+    pool.query(sqlQuery, [`"${gender}"`], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: error.message });
+        }
+        res.json({ message: "Query successful", data: results });
+    });
+});
+
+
 
 // Start Express Server
 app.listen(PORT, () => {
