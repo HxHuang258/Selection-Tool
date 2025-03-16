@@ -7,7 +7,7 @@ class FirebaseCSVService {
   static Future<void> downloadCSV() async {
     try {
       // Reference to the CSV file in Firebase Storage
-      final ref = FirebaseStorage.instance.ref().child("match-archive.csv");
+      final ref = FirebaseStorage.instance.ref().child("all_matches.sql");
 
       // Fetch the download URL using Firebase Storage SDK (not direct HTTP request)
       final url = await ref.getDownloadURL();

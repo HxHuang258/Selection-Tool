@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:webapp/screens/home_screen.dart';
 import '../services/firebase_csv_service.dart';  // Import the FirebaseCSVService
 
 class SignInScreen extends StatefulWidget {
@@ -36,6 +37,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
       // After successful sign-in, trigger the CSV download
       await _downloadCSV();
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => HomeScreen()));
 
     } catch (e) {
       setState(() {
