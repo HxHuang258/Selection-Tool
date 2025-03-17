@@ -4,6 +4,8 @@ import 'package:webapp/screens/home_screen.dart';
 import '../services/firebase_csv_service.dart';  // Import the FirebaseCSVService
 
 class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -69,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign In")),
+      appBar: AppBar(title: const Text("Sign In")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -77,21 +79,21 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(labelText: "Email"),
             ),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(labelText: "Password"),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _isLoading
-                ? CircularProgressIndicator()  // Show loading spinner during sign-in
+                ? const CircularProgressIndicator()  // Show loading spinner during sign-in
                 : ElevatedButton(
                     onPressed: _signInWithEmailPassword,
-                    child: Text("Sign In"),
+                    child: const Text("Sign In"),
                   ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(_statusMessage),  // Display status message (success or error)
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:webapp/screens/sign_in_screen.dart';
 import 'firebase_options.dart'; // Import the generated Firebase options file
 import 'services/firebase_csv_service.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -17,6 +18,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

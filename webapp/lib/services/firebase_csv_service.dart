@@ -1,6 +1,5 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:html' as html;  // For Web
-import 'package:http/http.dart' as http;
 
 class FirebaseCSVService {
   // Method to download CSV for Web
