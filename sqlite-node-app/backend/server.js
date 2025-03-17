@@ -8,10 +8,10 @@ const app = express();
 const port = 3000;
 
 // Read the .sql file
-const sqlScript = fs.readFileSync(path.join(__dirname, 'all_matches.sql'), 'utf8');
+const sqlScript = fs.readFileSync(path.join(__dirname, 'database/all_matches.sql'), 'utf8');
 
 // Create a new SQLite database (or open an existing one)
-const db = new sqlite3.Database(path.join(__dirname, 'all_matches.db'), (err) => {
+const db = new sqlite3.Database(path.join(__dirname, 'database/all_matches.db'), (err) => {
   if (err) {
     console.error('Error opening database:', err);
   } else {
