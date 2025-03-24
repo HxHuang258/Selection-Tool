@@ -1,4 +1,3 @@
-// src/Matches.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,13 +11,20 @@ const Matches = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  // Format the date into yyyy-mm-dd (for use in the backend)
+  const formatDate = (date) => {
+    if (!date) return '';
+    const [year, month, day] = date.split('-');
+    return `${year}-${month}-${day}`;
+  };
+
   // Fetch filtered data from backend
   const fetchMatches = () => {
     setLoading(true);
     axios.get('http://localhost:3000/filtered-data', {
       params: { 
-        startDate, 
-        endDate, 
+        startDate: formatDate(startDate),
+        endDate: formatDate(endDate),
         ageGroup: selectedAgeGroup, 
         round: selectedRound,
         level: selectedLevel,
@@ -50,9 +56,17 @@ const Matches = () => {
 
       {/* Filters */}
       <label>Start Date:</label>
-      <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+      <input 
+        type="date" 
+        value={startDate} 
+        onChange={(e) => setStartDate(e.target.value)} 
+      />
       <label>End Date:</label>
-      <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+      <input 
+        type="date" 
+        value={endDate} 
+        onChange={(e) => setEndDate(e.target.value)} 
+      />
 
       <label>Age Group:</label>
       <select value={selectedAgeGroup} onChange={(e) => setSelectedAgeGroup(e.target.value)}>

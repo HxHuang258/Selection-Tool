@@ -9,14 +9,14 @@ const port = 3000;
 
 function convertToDDMMYYYY(date) {
   const [year, month, day] = date.split('-');
-  return `${day}/${month}/${year}`;
+  return `${year}-${month}-${day}`;
 }
 
 // Read the .sql file
-const sqlScript = fs.readFileSync(path.join(__dirname, 'database/all_matches.sql'), 'utf8');
+const sqlScript = fs.readFileSync(path.join(__dirname, 'database/updated_sql_script.sql'), 'utf8');
 
 // Create a new SQLite database (or open an existing one)
-const db = new sqlite3.Database(path.join(__dirname, 'database/all_matches.db'), (err) => {
+const db = new sqlite3.Database(path.join(__dirname, 'database/updated_sql_script.db'), (err) => {
   if (err) {
     console.error('Error opening database:', err);
   } else {
@@ -75,7 +75,7 @@ app.get('/filtered-data', (req, res) => {
   }
 
   // Limit the results to 100 rows
-  query += ' LIMIT 100';
+  query += ' ORDER BY Date ASC LIMIT 100';
 
   // Execute the query
   db.all(query, params, (err, rows) => {
