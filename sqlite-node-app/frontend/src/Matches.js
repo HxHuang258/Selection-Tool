@@ -52,21 +52,26 @@ const Matches = () => {
 
   return (
     <div>
-      <h2>Match List</h2>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+        <h2 style={{ marginRight: '10px' }}>Results from:</h2>
+        
+        {/* Date Inputs Inline */}
+        <label style={{ marginRight: '10px' }}>Start Date:</label>
+        <input 
+          type="date" 
+          value={startDate} 
+          onChange={(e) => setStartDate(e.target.value)} 
+          style={{ marginRight: '20px' }}
+        />
 
-      {/* Filters */}
-      <label>Start Date:</label>
-      <input 
-        type="date" 
-        value={startDate} 
-        onChange={(e) => setStartDate(e.target.value)} 
-      />
-      <label>End Date:</label>
-      <input 
-        type="date" 
-        value={endDate} 
-        onChange={(e) => setEndDate(e.target.value)} 
-      />
+        <label style={{ marginRight: '10px' }}>End Date:</label>
+        <input 
+          type="date" 
+          value={endDate} 
+          onChange={(e) => setEndDate(e.target.value)} 
+          style={{ marginRight: '20px' }}
+        />
+      </div>
 
       <label>Age Group:</label>
       <select value={selectedAgeGroup} onChange={(e) => setSelectedAgeGroup(e.target.value)}>
@@ -81,9 +86,8 @@ const Matches = () => {
       <label>Round:</label>
       <select value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
         <option value="">All</option>
-        <option value="Round 1">Round 1</option>
-        <option value="Round 2">Round 2</option>
-        <option value="Round 3">Round 3</option>
+        <option value="Semi-Final">Semi-Final</option>
+        <option value="Final">Final</option>
       </select>
 
       <label>Level:</label>
@@ -92,6 +96,7 @@ const Matches = () => {
         <option value="Bronze">Bronze</option>
         <option value="Silver">Silver</option>
         <option value="Gold">Gold</option>
+        <option value="Nationals">Nationals</option>
       </select>
 
       <label>Event:</label>
@@ -99,6 +104,8 @@ const Matches = () => {
         <option value="">All</option>
         <option value="OS">OS</option>
         <option value="OD">OD</option>
+        <option value="WS">WS</option>
+        <option value="WD">WD</option>
         <option value="XD">XD</option>
       </select>
 
