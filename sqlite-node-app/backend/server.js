@@ -38,7 +38,7 @@ app.use(cors({
 }));
 
 app.get('/filtered-data', (req, res) => {
-  let { startDate, endDate, gender, ageGroup, round, level, event } = req.query;
+  let { startDate, endDate, ageGroup, round, level, event } = req.query;
   let query = 'SELECT * FROM all_matches WHERE 1=1';
   let params = [];
 
@@ -48,15 +48,6 @@ app.get('/filtered-data', (req, res) => {
     endDate = convertToDDMMYYYY(endDate);
     query += ' AND Date BETWEEN ? AND ?';
     params.push(startDate, endDate);
-  }
-
-  // Gender filter (if provided)
-  if (gender) {
-    query += ` AND (
-      EXISTS (SELECT 1 FROM json_each(Team1_Gender) WHERE json_each.value = ?) 
-      OR EXISTS (SELECT 1 FROM json_each(Team2_Gender) WHERE json_each.value = ?)
-    )`;
-    params.push(gender, gender);
   }
 
   // Age group filter (if provided)

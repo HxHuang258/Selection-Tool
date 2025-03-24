@@ -5,7 +5,6 @@ import axios from 'axios';
 const Matches = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedGender, setSelectedGender] = useState("");
   const [selectedAgeGroup, setSelectedAgeGroup] = useState("");
   const [selectedRound, setSelectedRound] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -20,7 +19,6 @@ const Matches = () => {
       params: { 
         startDate, 
         endDate, 
-        gender: selectedGender, 
         ageGroup: selectedAgeGroup, 
         round: selectedRound,
         level: selectedLevel,
@@ -55,13 +53,6 @@ const Matches = () => {
       <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
       <label>End Date:</label>
       <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-
-      <label>Gender:</label>
-      <select value={selectedGender} onChange={(e) => setSelectedGender(e.target.value)}>
-        <option value="">All</option>
-        <option value="M">Male</option>
-        <option value="F">Female</option>
-      </select>
 
       <label>Age Group:</label>
       <select value={selectedAgeGroup} onChange={(e) => setSelectedAgeGroup(e.target.value)}>
@@ -109,7 +100,6 @@ const Matches = () => {
             <th>Level</th>
             <th>Event</th>
             <th>Players</th>
-            <th>Gender</th>
           </tr>
         </thead>
         <tbody>
@@ -122,9 +112,6 @@ const Matches = () => {
               <td>{match.Event}</td>
               <td>
                 {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
-              </td>
-              <td>
-                {JSON.parse(match.Team1_Gender).join(", ")} vs {JSON.parse(match.Team2_Gender).join(", ")}
               </td>
             </tr>
           ))}
