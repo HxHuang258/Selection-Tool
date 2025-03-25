@@ -52,8 +52,11 @@ app.get('/filtered-data', (req, res) => {
 
   // Age group filter (if provided)
   if (ageGroup) {
-    query += ' AND Age = ?';
-    params.push(ageGroup);
+    // Flatten the array if it is nested
+    const ageGroups = Array.isArray(ageGroup) ? ageGroup.flat() : [ageGroup];
+    const placeholders = ageGroups.map(() => '?').join(', ');
+    query += ` AND Age IN (${placeholders})`;
+    params.push(...ageGroups);
   }
 
   // Round filter (if provided)
