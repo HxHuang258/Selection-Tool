@@ -3,13 +3,15 @@ import Select from 'react-select';
 import axios from 'axios';
 
 const Matches = () => {
-  const [matchesByPlayer, setMatchesByPlayer] = useState({}); // Holds grouped matches by player
-  const [loading, setLoading] = useState(true);
-  const [selectedAgeGroup, setSelectedAgeGroup] = useState([]);
-  const [selectedRound, setSelectedRound] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState([]);
+  const [matchesByFilterSet, setMatchesByFilterSet] = useState([]); // To store matches grouped by filter set and player
+  const [filters, setFilters] = useState([{
+    selectedAgeGroup: [],
+    selectedRound: [],
+    selectedLevel: [],
+  }]); // Multiple filter sets
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Format the date into yyyy-mm-dd (for use in the backend)
   const formatDate = (date) => {
@@ -18,38 +20,52 @@ const Matches = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Fetch filtered data from backend and group by player
+  // Fetch filtered data for each filter set
   const fetchMatches = () => {
     setLoading(true);
-    axios.get('http://localhost:3000/filtered-data', {
-      params: {
-        startDate: formatDate(startDate),
-        endDate: formatDate(endDate),
-        ageGroup: Array.isArray(selectedAgeGroup) ? selectedAgeGroup.map(option => option.value) : [],
-        round: Array.isArray(selectedRound) ? selectedRound.map(option => option.value) : [],
-        level: Array.isArray(selectedLevel) ? selectedLevel.map(option => option.value) : [],
-      }
-    })
-      .then((response) => {
-        // Group the matches by player
-        const groupedMatches = {};
 
-        response.data.forEach((match) => {
-          // Get all players
-          const players = [
-            ...JSON.parse(match.Team1_Names),
-            ...JSON.parse(match.Team2_Names),
-          ];
+    const filterRequests = filters.map((filter, index) => {
+      return axios.get('http://localhost:3000/filtered-data', {
+        params: {
+          startDate: formatDate(startDate),
+          endDate: formatDate(endDate),
+          ageGroup: Array.isArray(filter.selectedAgeGroup) ? filter.selectedAgeGroup.map(option => option.value) : [],
+          round: Array.isArray(filter.selectedRound) ? filter.selectedRound.map(option => option.value) : [],
+          level: Array.isArray(filter.selectedLevel) ? filter.selectedLevel.map(option => option.value) : [],
+        }
+      });
+    });
 
-          players.forEach((playerName) => {
-            if (!groupedMatches[playerName]) {
-              groupedMatches[playerName] = [];
-            }
-            groupedMatches[playerName].push(match); // Group the match by player
+    // Wait for all filter requests and process the results
+    Promise.all(filterRequests)
+      .then((responses) => {
+        const groupedByFilterSet = [];
+
+        responses.forEach((response, filterIndex) => {
+          const filterMatches = response.data;
+          const groupedByPlayer = {};
+
+          // Group matches by player for this filter set
+          filterMatches.forEach((match) => {
+            const players = [
+              ...JSON.parse(match.Team1_Names),
+              ...JSON.parse(match.Team2_Names),
+            ];
+
+            players.forEach((playerName) => {
+              if (!groupedByPlayer[playerName]) {
+                groupedByPlayer[playerName] = [];
+              }
+              // Add match to the player's array
+              groupedByPlayer[playerName].push(match);
+            });
           });
+
+          // Push grouped matches for this filter set
+          groupedByFilterSet.push({ filterIndex, groupedByPlayer });
         });
 
-        setMatchesByPlayer(groupedMatches);
+        setMatchesByFilterSet(groupedByFilterSet);
         setLoading(false);
       })
       .catch((error) => {
@@ -58,14 +74,21 @@ const Matches = () => {
       });
   };
 
-  useEffect(() => {
-    fetchMatches(); // Fetch matches when component mounts
-  }, []);
+  // Add new filter set
+  const addFilterSet = () => {
+    setFilters([...filters, { selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }]);
+  };
 
   // Handle filter changes
-  const handleFilterChange = () => {
-    fetchMatches();
+  const handleFilterChange = (index, field, value) => {
+    const updatedFilters = [...filters];
+    updatedFilters[index] = { ...updatedFilters[index], [field]: value };
+    setFilters(updatedFilters);
   };
+
+  useEffect(() => {
+    fetchMatches(); // Fetch matches when component mounts or filters change
+  }, [filters]);
 
   return (
     <div>
@@ -90,89 +113,102 @@ const Matches = () => {
         />
       </div>
 
-      {/* Multi-Select for Age Group */}
-      <label>Age Group:</label>
-      <Select
-        isMulti
-        options={[
-          { value: 'U11', label: 'U11' },
-          { value: 'U13', label: 'U13' },
-          { value: 'U15', label: 'U15' },
-          { value: 'U17', label: 'U17' },
-          { value: 'U19', label: 'U19' }
-        ]}
-        value={selectedAgeGroup} // ✅ Ensure value is always an array
-        onChange={(selected) => setSelectedAgeGroup(selected || [])} // ✅ If `null`, set an empty array
-        className="basic-multi-select"
-        classNamePrefix="select"
-      />
+      {/* Render Multiple Filter Sets */}
+      {filters.map((filter, index) => (
+        <div key={index}>
+          <h3>Filter Set {index + 1}</h3>
 
-      <label>Round:</label>
-      <Select
-        isMulti
-        options={[
-          { value: 'Semi-Final', label: 'Semi-Final' },
-          { value: 'Final', label: 'Final' }
-        ]}
-        value={selectedRound} // ✅ Ensure value is always an array
-        onChange={(selected) => setSelectedRound(selected || [])} // ✅ If `null`, set an empty array
-        className="basic-multi-select"
-        classNamePrefix="select"
-      />
+          {/* Multi-Select for Age Group */}
+          <label>Age Group:</label>
+          <Select
+            isMulti
+            options={[
+              { value: 'U11', label: 'U11' },
+              { value: 'U13', label: 'U13' },
+              { value: 'U15', label: 'U15' },
+              { value: 'U17', label: 'U17' },
+              { value: 'U19', label: 'U19' }
+            ]}
+            value={filter.selectedAgeGroup}
+            onChange={(selected) => handleFilterChange(index, 'selectedAgeGroup', selected || [])}
+            className="basic-multi-select"
+            classNamePrefix="select"
+          />
 
-      <label>Level:</label>
-      <Select
-        isMulti
-        options={[
-          { value: 'Bronze', label: 'Bronze' },
-          { value: 'Silver', label: 'Silver' },
-          { value: 'Gold', label: 'Gold' },
-          { value: 'Nationals', label: 'Nationals' }
-        ]}
-        value={selectedLevel} // ✅ Ensure value is always an array
-        onChange={(selected) => setSelectedLevel(selected || [])} // ✅ If `null`, set an empty array
-        className="basic-multi-select"
-        classNamePrefix="select"
-      />
+          <label>Round:</label>
+          <Select
+            isMulti
+            options={[
+              { value: 'Semi-Final', label: 'Semi-Final' },
+              { value: 'Final', label: 'Final' }
+            ]}
+            value={filter.selectedRound}
+            onChange={(selected) => handleFilterChange(index, 'selectedRound', selected || [])}
+            className="basic-multi-select"
+            classNamePrefix="select"
+          />
 
-      <button onClick={handleFilterChange}>Apply Filters</button>
+          <label>Level:</label>
+          <Select
+            isMulti
+            options={[
+              { value: 'Bronze', label: 'Bronze' },
+              { value: 'Silver', label: 'Silver' },
+              { value: 'Gold', label: 'Gold' },
+              { value: 'Nationals', label: 'Nationals' }
+            ]}
+            value={filter.selectedLevel}
+            onChange={(selected) => handleFilterChange(index, 'selectedLevel', selected || [])}
+            className="basic-multi-select"
+            classNamePrefix="select"
+          />
+        </div>
+      ))}
 
-      {/* Player-wise Matches */}
-      <div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          Object.keys(matchesByPlayer).map((player) => (
-            <div key={player}>
-              <h3>{player}</h3>
-              <table border="1">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Tournament</th>
-                    <th>Round</th>
-                    <th>Level</th>
-                    <th>Opponents</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {matchesByPlayer[player].map((match, index) => (
-                    <tr key={index}>
-                      <td>{match.Date}</td>
-                      <td>{match.Tournament}</td>
-                      <td>{match.Round}</td>
-                      <td>{match.Level}</td>
-                      <td>
-                        {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <button onClick={addFilterSet}>Add New Filter Set</button>
+      <button onClick={fetchMatches}>Apply Filters</button>
+
+      {/* Matches Display */}
+      {loading ? <p>Loading...</p> : (
+        <div>
+          {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => (
+            <div key={filterIndex}>
+              <h3>Filter Set {filterIndex + 1} Results</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {Object.keys(groupedByPlayer).map((player, index) => (
+                  <div key={index} style={{ width: '30%', margin: '10px' }}>
+                    <h4>{player}</h4>
+                    <table border="1">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Tournament</th>
+                          <th>Round</th>
+                          <th>Level</th>
+                          <th>Players</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {groupedByPlayer[player].map((match, matchIndex) => (
+                          <tr key={matchIndex}>
+                            <td>{match.Date}</td>
+                            <td>{match.Tournament}</td>
+                            <td>{match.Round}</td>
+                            <td>{match.Level}</td>
+                            <td>
+                              {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
