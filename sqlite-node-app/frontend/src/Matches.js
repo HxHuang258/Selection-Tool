@@ -2,21 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import axios from 'axios';
 
-const ageGroupOptions = [
-    { value: 'U11', label: 'U11' },
-    { value: 'U13', label: 'U13' },
-    { value: 'U15', label: 'U15' },
-    { value: 'U17', label: 'U17' },
-    { value: 'U19', label: 'U19' },
-];
-
 
 const Matches = () => {
     const [matches, setMatches] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedAgeGroup, setSelectedAgeGroup] = useState([]);
-    const [selectedRound, setSelectedRound] = useState("");
-    const [selectedLevel, setSelectedLevel] = useState("");
+    const [selectedRound, setSelectedRound] = useState([]);
+    const [selectedLevel, setSelectedLevel] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -35,8 +27,8 @@ const Matches = () => {
                 startDate: formatDate(startDate),
                 endDate: formatDate(endDate),
                 ageGroup: Array.isArray(selectedAgeGroup) ? selectedAgeGroup.map(option => option.value) : [],
-                round: selectedRound,
-                level: selectedLevel,
+                round: Array.isArray(selectedRound) ? selectedRound.map(option => option.value) : [],
+                level: Array.isArray(selectedLevel) ? selectedLevel.map(option => option.value) : [],
             }
         })
             .then((response) => {
@@ -99,20 +91,32 @@ const Matches = () => {
             />
 
             <label>Round:</label>
-            <select value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
-                <option value="">All</option>
-                <option value="Semi-Final">Semi-Final</option>
-                <option value="Final">Final</option>
-            </select>
+            <Select
+                isMulti
+                options={[
+                    { value: 'Semi-Final', label: 'Semi-Final' },
+                    { value: 'Final', label: 'Final' }
+                ]}
+                value={selectedRound} // ✅ Ensure value is always an array
+                onChange={(selected) => setSelectedRound(selected || [])} // ✅ If `null`, set an empty array
+                className="basic-multi-select"
+                classNamePrefix="select"
+            />
 
             <label>Level:</label>
-            <select value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
-                <option value="">All</option>
-                <option value="Bronze">Bronze</option>
-                <option value="Silver">Silver</option>
-                <option value="Gold">Gold</option>
-                <option value="Nationals">Nationals</option>
-            </select>
+            <Select
+                isMulti
+                options={[
+                    { value: 'Bronze', label: 'Bronze' },
+                    { value: 'Silver', label: 'Silver' },
+                    { value: 'Gold', label: 'Gold' },
+                    { value: 'Nationals', label: 'Nationals' }
+                ]}
+                value={selectedLevel} // ✅ Ensure value is always an array
+                onChange={(selected) => setSelectedLevel(selected || [])} // ✅ If `null`, set an empty array
+                className="basic-multi-select"
+                classNamePrefix="select"
+            />
 
             <button onClick={handleFilterChange}>Apply Filters</button>
 

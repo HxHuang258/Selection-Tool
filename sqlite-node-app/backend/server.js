@@ -59,16 +59,20 @@ app.get('/filtered-data', (req, res) => {
     params.push(...ageGroups);
   }
 
-  // Round filter (if provided)
   if (round) {
-    query += ' AND Round = ?';
-    params.push(round);
+    // Flatten the array if it is nested
+    const rounds = Array.isArray(round) ? round.flat() : [round];
+    const placeholders = round.map(() => '?').join(', ');
+    query += ` AND Round IN (${placeholders})`;
+    params.push(...rounds);
   }
 
-  // Level filter (if provided)
   if (level) {
-    query += ' AND Level = ?';
-    params.push(level);
+    // Flatten the array if it is nested
+    const levels = Array.isArray(level) ? level.flat() : [level];
+    const placeholders = level.map(() => '?').join(', ');
+    query += ` AND Level IN (${placeholders})`;
+    params.push(...levels);
   }
 
   // Event filter (if provided)
