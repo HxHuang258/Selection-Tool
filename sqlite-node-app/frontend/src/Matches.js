@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select'
 import axios from 'axios';
+
+const ageGroupOptions = [
+    { value: 'U11', label: 'U11' },
+    { value: 'U13', label: 'U13' },
+    { value: 'U15', label: 'U15' },
+    { value: 'U17', label: 'U17' },
+    { value: 'U19', label: 'U19' },
+  ];
+  
 
 const Matches = () => {
   const [matches, setMatches] = useState([]);
@@ -7,7 +17,6 @@ const Matches = () => {
   const [selectedAgeGroup, setSelectedAgeGroup] = useState("");
   const [selectedRound, setSelectedRound] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -28,7 +37,6 @@ const Matches = () => {
         ageGroup: selectedAgeGroup, 
         round: selectedRound,
         level: selectedLevel,
-        event: selectedEvent,
       }
     })
       .then((response) => {
@@ -73,15 +81,16 @@ const Matches = () => {
         />
       </div>
 
+      {/* Multi-Select for Age Group */}
       <label>Age Group:</label>
-      <select value={selectedAgeGroup} onChange={(e) => setSelectedAgeGroup(e.target.value)}>
-        <option value="">All</option>
-        <option value="U11">U11</option>
-        <option value="U13">U13</option>
-        <option value="U15">U15</option>
-        <option value="U17">U17</option>
-        <option value="U19">U19</option>
-      </select>
+      <Select
+        isMulti
+        options={ageGroupOptions}
+        value={selectedAgeGroup}
+        onChange={setSelectedAgeGroup}
+        className="basic-multi-select"
+        classNamePrefix="select"
+      />
 
       <label>Round:</label>
       <select value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
@@ -99,16 +108,6 @@ const Matches = () => {
         <option value="Nationals">Nationals</option>
       </select>
 
-      <label>Event:</label>
-      <select value={selectedEvent} onChange={(e) => setSelectedEvent(e.target.value)}>
-        <option value="">All</option>
-        <option value="OS">OS</option>
-        <option value="OD">OD</option>
-        <option value="WS">WS</option>
-        <option value="WD">WD</option>
-        <option value="XD">XD</option>
-      </select>
-
       <button onClick={handleFilterChange}>Apply Filters</button>
 
       {/* Matches Table */}
@@ -119,7 +118,6 @@ const Matches = () => {
             <th>Tournament</th>
             <th>Round</th>
             <th>Level</th>
-            <th>Event</th>
             <th>Players</th>
           </tr>
         </thead>
@@ -130,7 +128,6 @@ const Matches = () => {
               <td>{match.Tournament}</td>
               <td>{match.Round}</td>
               <td>{match.Level}</td>
-              <td>{match.Event}</td>
               <td>
                 {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
               </td>
