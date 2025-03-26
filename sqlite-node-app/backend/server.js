@@ -75,49 +75,8 @@ app.get('/filtered-data', (req, res) => {
     params.push(...levels);
   }
 
-  // Event filter (if provided)
-  if (event) {
-    query += ' AND Event = ?';
-    params.push(event);
-  }
-
   // Limit the results to 100 rows
   query += ' ORDER BY Date ASC LIMIT 100';
-
-  // Execute the query
-  app.get('/filtered-data', (req, res) => {
-    const { startDate, endDate, ageGroup, round, level } = req.query;
-    let query = 'SELECT * FROM all_matches WHERE 1=1';
-    let params = [];
-  
-    // Filter by date range
-    if (startDate && endDate) {
-      query += ' AND Date BETWEEN ? AND ?';
-      params.push(startDate, endDate);
-    }
-  
-    // Handle multi-select for Age Group
-    if (ageGroup) {
-      const ageGroups = Array.isArray(ageGroup) ? ageGroup.flat() : [ageGroup];
-      const placeholders = ageGroups.map(() => '?').join(', ');
-      query += ` AND Age IN (${placeholders})`;
-      params.push(...ageGroups);
-    }
-  
-    // Filter by Round
-    if (round) {
-      query += ' AND Round = ?';
-      params.push(round);
-    }
-  
-    // Filter by Level
-    if (level) {
-      query += ' AND Level = ?';
-      params.push(level);
-    }
-  
-    // Order results by date and limit results
-    query += ' ORDER BY Date ASC';
   
     // Execute SQL query
     db.all(query, params, (err, rows) => {
@@ -125,32 +84,40 @@ app.get('/filtered-data', (req, res) => {
         console.error(err.message);
         return res.status(500).send('Error retrieving data');
       }
-  
+    
       // Organize data by player
       const playerMatches = {};
-  
+      const seenMatches = new Set(); // Store unique MatchIDs
+    
       rows.forEach((match) => {
-        const players = [
-          ...JSON.parse(match.Team1_Names),
-          ...JSON.parse(match.Team2_Names),
-        ];
-  
-        players.forEach((playerName) => {
-          if (!playerMatches[playerName]) {
-            playerMatches[playerName] = [];
-          }
-          playerMatches[playerName].push(match);  // Group matches by player
-        });
+        const matchId = match.MatchID;
+    
+        // Only process if this match hasn't been added before
+        if (!seenMatches.has(matchId)) {
+          seenMatches.add(matchId);
+    
+          const players = [
+            ...JSON.parse(match.Team1_Names),
+            ...JSON.parse(match.Team2_Names),
+          ];
+    
+          players.forEach((playerName) => {
+            if (!playerMatches[playerName]) {
+              playerMatches[playerName] = [];
+            }
+            playerMatches[playerName].push(match); // Group matches by player
+          });
+        }
       });
-  
-      res.json(playerMatches);  // Send grouped data as response
+    
+      res.json(playerMatches); // Send grouped data as response
     });
+    
+
+    console.log('Final Query:', query);
+    console.log('Final Params:', params);  
   });
   
-
-  console.log('Final Query:', query);
-  console.log('Final Params:', params);  
-});
 
 
 

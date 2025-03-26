@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
+import * as XLSX from 'xlsx';  // Import xlsx for Excel export
 
 const Matches = () => {
-  const [matchesByFilterSet, setMatchesByFilterSet] = useState([]); // To store matches grouped by filter set and player
-  const [filters, setFilters] = useState([{
-    selectedAgeGroup: [],
-    selectedRound: [],
-    selectedLevel: [],
-  }]); // Multiple filter sets
+  const [matchesByFilterSet, setMatchesByFilterSet] = useState([]);
+  const [filters, setFilters] = useState([
+    { selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }
+  ]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Format the date into yyyy-mm-dd (for use in the backend)
+  // Format date into yyyy-mm-dd
   const formatDate = (date) => {
     if (!date) return '';
     const [year, month, day] = date.split('-');
@@ -21,57 +20,66 @@ const Matches = () => {
   };
 
   // Fetch filtered data for each filter set
-  const fetchMatches = () => {
+  const fetchMatches = async () => {
     setLoading(true);
 
-    const filterRequests = filters.map((filter, index) => {
-      return axios.get('http://localhost:3000/filtered-data', {
-        params: {
-          startDate: formatDate(startDate),
-          endDate: formatDate(endDate),
-          ageGroup: Array.isArray(filter.selectedAgeGroup) ? filter.selectedAgeGroup.map(option => option.value) : [],
-          round: Array.isArray(filter.selectedRound) ? filter.selectedRound.map(option => option.value) : [],
-          level: Array.isArray(filter.selectedLevel) ? filter.selectedLevel.map(option => option.value) : [],
+    try {
+      const filterRequests = filters.map(filter =>
+        axios.get('http://localhost:3000/filtered-data', {
+          params: {
+            startDate: formatDate(startDate),
+            endDate: formatDate(endDate),
+            ageGroup: Array.isArray(filter.selectedAgeGroup) ? filter.selectedAgeGroup.map(option => option.value) : [],
+            round: Array.isArray(filter.selectedRound) ? filter.selectedRound.map(option => option.value) : [],
+            level: Array.isArray(filter.selectedLevel) ? filter.selectedLevel.map(option => option.value) : [],
+          }
+        })
+      );
+
+      const responses = await Promise.all(filterRequests);
+const groupedByFilterSet = [];
+
+responses.forEach((response, filterIndex) => {
+  let filterMatches = response.data;
+
+  if (typeof filterMatches === 'object' && !Array.isArray(filterMatches)) {
+    // If response is an object (grouped by player), flatten it to an array
+    filterMatches = Object.values(filterMatches).flat();
+  }
+
+  if (!Array.isArray(filterMatches)) {
+    console.error(`Error: filterMatches for filter set ${filterIndex} is not an array`, filterMatches);
+    return;
+  }
+
+  const groupedByPlayer = {};
+
+  filterMatches.forEach((match) => {
+    try {
+      const team1 = JSON.parse(match.Team1_Names);
+      const team2 = JSON.parse(match.Team2_Names);
+      const players = [...team1, ...team2];
+
+      players.forEach((playerName) => {
+        if (!groupedByPlayer[playerName]) {
+          groupedByPlayer[playerName] = [];
         }
+        groupedByPlayer[playerName].push(match);
       });
-    });
+    } catch (error) {
+      console.error('Error parsing player names:', error, match);
+    }
+  });
 
-    // Wait for all filter requests and process the results
-    Promise.all(filterRequests)
-      .then((responses) => {
-        const groupedByFilterSet = [];
+  groupedByFilterSet.push({ filterIndex, groupedByPlayer });
+});
 
-        responses.forEach((response, filterIndex) => {
-          const filterMatches = response.data;
-          const groupedByPlayer = {};
+setMatchesByFilterSet(groupedByFilterSet);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
-          // Group matches by player for this filter set
-          filterMatches.forEach((match) => {
-            const players = [
-              ...JSON.parse(match.Team1_Names),
-              ...JSON.parse(match.Team2_Names),
-            ];
-
-            players.forEach((playerName) => {
-              if (!groupedByPlayer[playerName]) {
-                groupedByPlayer[playerName] = [];
-              }
-              // Add match to the player's array
-              groupedByPlayer[playerName].push(match);
-            });
-          });
-
-          // Push grouped matches for this filter set
-          groupedByFilterSet.push({ filterIndex, groupedByPlayer });
-        });
-
-        setMatchesByFilterSet(groupedByFilterSet);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
+    setLoading(false);
   };
 
   // Add new filter set
@@ -86,39 +94,45 @@ const Matches = () => {
     setFilters(updatedFilters);
   };
 
-  useEffect(() => {
-    fetchMatches(); // Fetch matches when component mounts or filters change
-  }, [filters]);
+  // Export table data to Excel
+  const exportToExcel = () => {
+    const data = [];
+    matchesByFilterSet.forEach((filterSet) => {
+      Object.keys(filterSet.groupedByPlayer).forEach((player) => {
+        filterSet.groupedByPlayer[player].forEach((match) => {
+          data.push({
+            Player: player,
+            Date: match.Date,
+            Tournament: match.Tournament,
+            Round: match.Round,
+            Level: match.Level,
+          });
+        });
+      });
+    });
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Matches');
+    XLSX.writeFile(wb, 'Matches.xlsx');
+  };
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-        <h2 style={{ marginRight: '10px' }}>Results from:</h2>
+    <div className="p-5">
+      <h2>Match Results</h2>
 
-        {/* Date Inputs Inline */}
-        <label style={{ marginRight: '10px' }}>Start Date:</label>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          style={{ marginRight: '20px' }}
-        />
+      {/* Date Filters */}
+      <label>Start Date:</label>
+      <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
 
-        <label style={{ marginRight: '10px' }}>End Date:</label>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          style={{ marginRight: '20px' }}
-        />
-      </div>
+      <label>End Date:</label>
+      <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
 
-      {/* Render Multiple Filter Sets */}
+      {/* Filter Sets */}
       {filters.map((filter, index) => (
         <div key={index}>
           <h3>Filter Set {index + 1}</h3>
 
-          {/* Multi-Select for Age Group */}
           <label>Age Group:</label>
           <Select
             isMulti
@@ -131,7 +145,6 @@ const Matches = () => {
             ]}
             value={filter.selectedAgeGroup}
             onChange={(selected) => handleFilterChange(index, 'selectedAgeGroup', selected || [])}
-            className="basic-multi-select"
             classNamePrefix="select"
           />
 
@@ -144,7 +157,6 @@ const Matches = () => {
             ]}
             value={filter.selectedRound}
             onChange={(selected) => handleFilterChange(index, 'selectedRound', selected || [])}
-            className="basic-multi-select"
             classNamePrefix="select"
           />
 
@@ -159,7 +171,6 @@ const Matches = () => {
             ]}
             value={filter.selectedLevel}
             onChange={(selected) => handleFilterChange(index, 'selectedLevel', selected || [])}
-            className="basic-multi-select"
             classNamePrefix="select"
           />
         </div>
@@ -167,34 +178,39 @@ const Matches = () => {
 
       <button onClick={addFilterSet}>Add New Filter Set</button>
       <button onClick={fetchMatches}>Apply Filters</button>
+      <button onClick={exportToExcel}>Export to Excel</button>
 
-      {/* Matches Display */}
+      {/* Match Display */}
       {loading ? <p>Loading...</p> : (
         <div>
-          {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => (
-            <div key={filterIndex}>
-              <h3>Filter Set {filterIndex + 1} Results</h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {Object.keys(groupedByPlayer).map((player, index) => (
-                  <div key={index} style={{ width: '30%', margin: '10px' }}>
+        {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => (
+          <div key={filterIndex}>
+            <h3>Filter Set {filterIndex + 1} Results</h3>
+      
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {Object.entries(groupedByPlayer).map(([player, matches]) => {
+                console.log(`🔍 Debug Player: ${player}`, matches); // ✅ Log player and their matches
+      
+                // ✅ Remove Duplicates in Frontend (if any)
+                const uniqueMatches = Array.from(new Map(matches.map(m => [m.MatchID, m])).values());
+      
+                return (
+                  <div key={player} style={{ width: '30%', margin: '10px' }}>
                     <h4>{player}</h4>
+      
                     <table border="1">
                       <thead>
                         <tr>
                           <th>Date</th>
                           <th>Tournament</th>
-                          <th>Round</th>
-                          <th>Level</th>
                           <th>Players</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {groupedByPlayer[player].map((match, matchIndex) => (
-                          <tr key={matchIndex}>
+                        {uniqueMatches.map((match) => ( // ✅ Ensure unique matches per player
+                          <tr key={match.MatchID}>
                             <td>{match.Date}</td>
                             <td>{match.Tournament}</td>
-                            <td>{match.Round}</td>
-                            <td>{match.Level}</td>
                             <td>
                               {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
                             </td>
@@ -203,11 +219,13 @@ const Matches = () => {
                       </tbody>
                     </table>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
+      
       )}
     </div>
   );
