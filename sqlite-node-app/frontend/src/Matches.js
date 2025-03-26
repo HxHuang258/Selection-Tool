@@ -195,31 +195,47 @@ setMatchesByFilterSet(groupedByFilterSet);
                 const uniqueMatches = Array.from(new Map(matches.map(m => [m.MatchID, m])).values());
       
                 return (
-                  <div key={player} style={{ width: '30%', margin: '10px' }}>
-                    <h4>{player}</h4>
-      
-                    <table border="1">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Tournament</th>
-                          <th>Players</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {uniqueMatches.map((match) => ( // ✅ Ensure unique matches per player
-                          <tr key={match.MatchID}>
-                            <td>{match.Date}</td>
-                            <td>{match.Tournament}</td>
-                            <td>
-                              {JSON.parse(match.Team1_Names).join(", ")} vs {JSON.parse(match.Team2_Names).join(", ")}
-                            </td>
+                    <div key={player} style={{ width: '30%', margin: '10px' }}>
+                      <h4>{player}</h4>
+                  
+                      <table border="1">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Tournament</th>
+                            <th>Players</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                );
+                        </thead>
+                        <tbody>
+                          {uniqueMatches.map((match) => {
+                            const team1Players = JSON.parse(match.Team1_Names);
+                            const team2Players = JSON.parse(match.Team2_Names);
+                  
+                            let playerSide, opponentSide;
+                  
+                            if (team1Players.includes(player)) {
+                              playerSide = team1Players;
+                              opponentSide = team2Players;
+                            } else {
+                              playerSide = team2Players;
+                              opponentSide = team1Players;
+                            }
+                  
+                            return (
+                              <tr key={match.MatchID}>
+                                <td>{match.Date}</td>
+                                <td>{match.Tournament}</td>
+                                <td>
+                                  <strong>{player}</strong>, {playerSide.filter(p => p !== player).join(", ")} vs {opponentSide.join(", ")}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                  
               })}
             </div>
           </div>
