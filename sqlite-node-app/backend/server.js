@@ -78,40 +78,44 @@ app.get('/filtered-data', (req, res) => {
   // Limit the results to 100 rows
   query += ' ORDER BY Date ASC LIMIT 100';
   
-    // Execute SQL query
-    db.all(query, params, (err, rows) => {
-      if (err) {
-        console.error(err.message);
-        return res.status(500).send('Error retrieving data');
+  db.all(query, params, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send('Error retrieving data');
+    }
+  
+    const playerMatches = {};
+    const seenMatches = new Set(); // To track already processed matches (based on sorted teams)
+  
+    rows.forEach((match) => {
+      const team1 = JSON.parse(match.Team1_Names).sort().join(",");
+      const team2 = JSON.parse(match.Team2_Names).sort().join(",");
+  
+      // Create a normalized match ID using the sorted teams (ensure flipped matches are treated the same)
+      const normalizedMatchId = [team1, team2].sort().join("|");
+  
+      // If this match has already been processed, skip it
+      if (!seenMatches.has(normalizedMatchId)) {
+        seenMatches.add(normalizedMatchId);
+  
+        const players = [
+          ...JSON.parse(match.Team1_Names),
+          ...JSON.parse(match.Team2_Names),
+        ];
+  
+        // Group by player
+        players.forEach((playerName) => {
+          if (!playerMatches[playerName]) {
+            playerMatches[playerName] = [];
+          }
+          playerMatches[playerName].push(match);  // Add the match to the player's list
+        });
       }
-    
-      // Organize data by player
-      const playerMatches = {};
-      const seenMatches = new Set(); // Store unique MatchIDs
-    
-      rows.forEach((match) => {
-        const matchId = match.MatchID;
-    
-        // Only process if this match hasn't been added before
-        if (!seenMatches.has(matchId)) {
-          seenMatches.add(matchId);
-    
-          const players = [
-            ...JSON.parse(match.Team1_Names),
-            ...JSON.parse(match.Team2_Names),
-          ];
-    
-          players.forEach((playerName) => {
-            if (!playerMatches[playerName]) {
-              playerMatches[playerName] = [];
-            }
-            playerMatches[playerName].push(match); // Group matches by player
-          });
-        }
-      });
-    
-      res.json(playerMatches); // Send grouped data as response
     });
+  
+    res.json(playerMatches); // Send the grouped data as response
+  });
+  
     
 
     console.log('Final Query:', query);
