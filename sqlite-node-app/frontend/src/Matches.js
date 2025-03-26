@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';  // Import xlsx for Excel export
 const Matches = () => {
   const [matchesByFilterSet, setMatchesByFilterSet] = useState([]);
   const [filters, setFilters] = useState([
-    { title: "Filter Set 1", selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }
+    { title: "Custom Criteria", selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }
   ]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -192,7 +192,18 @@ const Matches = () => {
               value={filter.selectedAgeGroup}
               onChange={(selected) => handleFilterChange(index, 'selectedAgeGroup', selected || [])}
               classNamePrefix="select"
-              styles={{ control: (base) => ({ ...base, minHeight: '30px', fontSize: '12px' }) }}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  minHeight: '30px',
+                  fontSize: '12px',
+                }),
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 9999, // Ensure dropdown goes above sticky header
+                }),
+              }}
+              menuPortalTarget={document.body} // Makes the dropdown render at the body level, above everything else
             />
 
             {/* Round */}
@@ -205,7 +216,18 @@ const Matches = () => {
               value={filter.selectedRound}
               onChange={(selected) => handleFilterChange(index, 'selectedRound', selected || [])}
               classNamePrefix="select"
-              styles={{ control: (base) => ({ ...base, minHeight: '30px', fontSize: '12px' }) }}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  minHeight: '30px',
+                  fontSize: '12px',
+                }),
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 9999, // Ensure dropdown goes above sticky header
+                }),
+              }}
+              menuPortalTarget={document.body} // Makes the dropdown render at the body level, above everything else
             />
 
             {/* Level */}
@@ -220,7 +242,18 @@ const Matches = () => {
               value={filter.selectedLevel}
               onChange={(selected) => handleFilterChange(index, 'selectedLevel', selected || [])}
               classNamePrefix="select"
-              styles={{ control: (base) => ({ ...base, minHeight: '30px', fontSize: '12px' }) }}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  minHeight: '30px',
+                  fontSize: '12px',
+                }),
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 9999, // Ensure dropdown goes above sticky header
+                }),
+              }}
+              menuPortalTarget={document.body} // Makes the dropdown render at the body level, above everything else
             />
           </div>
         ))}
@@ -247,13 +280,31 @@ const Matches = () => {
         return (
           <div className="matches-container" style={{ padding: '20px' }}>
             {/* Create a table with player names in the first column and each filter set as a separate column */}
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} border="1">
-              <thead>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                textAlign: 'left',
+                height: '400px', // Set a fixed height for the table body
+                overflowY: 'auto', // Enables scrolling
+                display: 'block', // Ensures the table body is scrollable
+              }}
+              border="1"
+            >
+              <thead
+                style={{
+                  backgroundColor: '#3498db',
+                  color: '#fff',
+                  position: 'sticky', // This makes the header sticky
+                  top: 0, // Keeps the header at the top when scrolling
+                  zIndex: 1, // Ensures the header stays on top of the table rows
+                }}
+              >
                 <tr>
-                  <th style={{ backgroundColor: '#3498db', color: '#fff', padding: '10px' }}>Player</th>
+                  <th style={{ padding: '10px' }}>Player</th>
                   {filters.map((filter, index) => (
-                    <th key={index} style={{ backgroundColor: '#3498db', color: '#fff', padding: '10px' }}>
-                      {filter.title} {/* Show user-defined title instead of "Filter Set X" */}
+                    <th key={index} style={{ padding: '10px' }}>
+                      {filter.title}
                     </th>
                   ))}
                 </tr>
