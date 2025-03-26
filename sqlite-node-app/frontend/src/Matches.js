@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';  // Import xlsx for Excel export
 const Matches = () => {
   const [matchesByFilterSet, setMatchesByFilterSet] = useState([]);
   const [filters, setFilters] = useState([
-    { selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }
+    { title: "Filter Set 1", selectedAgeGroup: [], selectedRound: [], selectedLevel: [] }
   ]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -165,7 +165,19 @@ const Matches = () => {
               ✖
             </button>
 
-            <h4 style={{ fontSize: '14px', marginBottom: '5px' }}>Filter Set {index + 1}</h4>
+            <input
+              type="text"
+              value={filter.title}
+              onChange={(e) => handleFilterChange(index, "title", e.target.value)}
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                border: "none",
+                background: "transparent",
+                width: "100%",
+                marginBottom: "5px",
+              }}
+            />
 
             {/* Age Group */}
             <Select
@@ -239,9 +251,9 @@ const Matches = () => {
               <thead>
                 <tr>
                   <th style={{ backgroundColor: '#3498db', color: '#fff', padding: '10px' }}>Player</th>
-                  {matchesByFilterSet.map(({ filterIndex }) => (
-                    <th key={filterIndex} style={{ backgroundColor: '#3498db', color: '#fff', padding: '10px' }}>
-                      Filter Set {filterIndex + 1}
+                  {filters.map((filter, index) => (
+                    <th key={index} style={{ backgroundColor: '#3498db', color: '#fff', padding: '10px' }}>
+                      {filter.title} {/* Show user-defined title instead of "Filter Set X" */}
                     </th>
                   ))}
                 </tr>
