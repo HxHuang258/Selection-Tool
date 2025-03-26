@@ -183,7 +183,7 @@ setMatchesByFilterSet(groupedByFilterSet);
       {/* Match Display */}
       {/* Match Display */}
 {loading ? <p>Loading...</p> : (
-  <div>
+  <div className="matches-container" style={{ padding: '20px' }}>
     {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => {
       // Group matches by event first, then by player
       const groupedByEvent = {};
@@ -202,24 +202,25 @@ setMatchesByFilterSet(groupedByFilterSet);
 
       return (
         <div key={filterIndex}>
-          <h3>Filter Set {filterIndex + 1} Results</h3>
+          <h3 style={{ marginBottom: '10px', fontSize: '24px' }}>Filter Set {filterIndex + 1} Results</h3>
 
           {/* Loop through each event */}
           {Object.entries(groupedByEvent).map(([event, players]) => (
-            <div key={event} style={{ marginBottom: '20px' }}>
-              <h2>{event}</h2>
+            <div key={event} style={{ marginBottom: '30px' }}>
+              <h2 style={{ fontSize: '28px', marginBottom: '15px', color: '#2c3e50' }}>{event}</h2>
 
+              {/* Loop through each player in this event */}
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {Object.entries(players).map(([player, matches]) => {
                   // ✅ Remove duplicates
                   const uniqueMatches = Array.from(new Map(matches.map(m => [m.MatchID, m])).values());
 
                   return (
-                    <div key={player} style={{ width: '30%', margin: '10px' }}>
-                      <h4>{player}</h4>
+                    <div key={player} style={{ width: '30%', margin: '10px', background: '#ecf0f1', borderRadius: '8px', padding: '15px' }}>
+                      <h4 style={{ fontWeight: 'bold', marginBottom: '10px' }}>{player}</h4>
 
-                      <table border="1">
-                        <thead>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' }} border="1">
+                        <thead style={{ backgroundColor: '#3498db', color: '#fff' }}>
                           <tr>
                             <th>Date</th>
                             <th>Tournament</th>
@@ -243,9 +244,9 @@ setMatchesByFilterSet(groupedByFilterSet);
 
                             return (
                               <tr key={match.MatchID}>
-                                <td>{match.Date}</td>
-                                <td>{match.Tournament}</td>
-                                <td>
+                                <td style={{ padding: '8px' }}>{match.Date}</td>
+                                <td style={{ padding: '8px' }}>{match.Tournament}</td>
+                                <td style={{ padding: '8px' }}>
                                   <strong>{player}</strong>, {playerSide.filter(p => p !== player).join(", ")} vs {opponentSide.join(", ")}
                                 </td>
                               </tr>
