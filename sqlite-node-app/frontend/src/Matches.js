@@ -181,23 +181,43 @@ setMatchesByFilterSet(groupedByFilterSet);
       <button onClick={exportToExcel}>Export to Excel</button>
 
       {/* Match Display */}
-      {loading ? <p>Loading...</p> : (
-        <div>
-        {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => (
-          <div key={filterIndex}>
-            <h3>Filter Set {filterIndex + 1} Results</h3>
-      
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {Object.entries(groupedByPlayer).map(([player, matches]) => {
-                console.log(`🔍 Debug Player: ${player}`, matches); // ✅ Log player and their matches
-      
-                // ✅ Remove Duplicates in Frontend (if any)
-                const uniqueMatches = Array.from(new Map(matches.map(m => [m.MatchID, m])).values());
-      
-                return (
+      {/* Match Display */}
+{loading ? <p>Loading...</p> : (
+  <div>
+    {matchesByFilterSet.map(({ filterIndex, groupedByPlayer }) => {
+      // Group matches by event first, then by player
+      const groupedByEvent = {};
+
+      Object.entries(groupedByPlayer).forEach(([player, matches]) => {
+        matches.forEach(match => {
+          if (!groupedByEvent[match.Event]) {
+            groupedByEvent[match.Event] = {};
+          }
+          if (!groupedByEvent[match.Event][player]) {
+            groupedByEvent[match.Event][player] = [];
+          }
+          groupedByEvent[match.Event][player].push(match);
+        });
+      });
+
+      return (
+        <div key={filterIndex}>
+          <h3>Filter Set {filterIndex + 1} Results</h3>
+
+          {/* Loop through each event */}
+          {Object.entries(groupedByEvent).map(([event, players]) => (
+            <div key={event} style={{ marginBottom: '20px' }}>
+              <h2>{event}</h2>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {Object.entries(players).map(([player, matches]) => {
+                  // ✅ Remove duplicates
+                  const uniqueMatches = Array.from(new Map(matches.map(m => [m.MatchID, m])).values());
+
+                  return (
                     <div key={player} style={{ width: '30%', margin: '10px' }}>
                       <h4>{player}</h4>
-                  
+
                       <table border="1">
                         <thead>
                           <tr>
@@ -210,9 +230,9 @@ setMatchesByFilterSet(groupedByFilterSet);
                           {uniqueMatches.map((match) => {
                             const team1Players = JSON.parse(match.Team1_Names);
                             const team2Players = JSON.parse(match.Team2_Names);
-                  
+
                             let playerSide, opponentSide;
-                  
+
                             if (team1Players.includes(player)) {
                               playerSide = team1Players;
                               opponentSide = team2Players;
@@ -220,7 +240,7 @@ setMatchesByFilterSet(groupedByFilterSet);
                               playerSide = team2Players;
                               opponentSide = team1Players;
                             }
-                  
+
                             return (
                               <tr key={match.MatchID}>
                                 <td>{match.Date}</td>
@@ -235,14 +255,15 @@ setMatchesByFilterSet(groupedByFilterSet);
                       </table>
                     </div>
                   );
-                  
-              })}
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      
-      )}
+          ))}
+        </div>
+      );
+    })}
+  </div>
+)}
     </div>
   );
 };
