@@ -101,25 +101,65 @@ const Matches = () => {
 
   // Export table data to Excel
   const exportToExcel = () => {
-    const data = [];
-    matchesByFilterSet.forEach((filterSet) => {
-      Object.keys(filterSet.groupedByPlayer).forEach((player) => {
-        filterSet.groupedByPlayer[player].forEach((match) => {
-          data.push({
-            Player: player,
-            Date: match.Date,
-            Tournament: match.Tournament,
-            Round: match.Round,
-            Level: match.Level,
-          });
-        });
-      });
-    });
-
-    const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Matches');
-    XLSX.writeFile(wb, 'Matches.xlsx');
+    const wsData = [];
+  
+    // Use the user-defined filter set names instead of default titles
+    const headerRow = ["Player", ...filters.map(filter => filter.title || `Filter Set ${filters.indexOf(filter) + 1}`)];
+    wsData.push(headerRow);
+  
+    // Collect all unique events and players
+    const allPlayers = new Set();
+    const allEvents = new Set();
+  
+    matchesByFilterSet.forEach(({ groupedByPlayer }) => {
+      Object.keys(groupedByPlayer).forEach(player => allPlayers.add(player));
+      Object.values(groupedByPlayer).flat().forEach(match => allEvents.add(match.Event));
+    });
+  
+    // Process each event separately
+    [...allEvents].forEach(event => {
+      wsData.push([event]); // Add event header row
+  
+      [...allPlayers].forEach(player => {
+        // Check if player has matches in this event
+        const playerHasMatches = matchesByFilterSet.some(({ groupedByPlayer }) =>
+          (groupedByPlayer[player] || []).some(match => match.Event === event)
+        );
+  
+        if (!playerHasMatches) return;
+  
+        const row = [player];
+  
+        matchesByFilterSet.forEach(({ groupedByPlayer }) => {
+          const playerMatches = (groupedByPlayer[player] || []).filter(match => match.Event === event);
+          const uniqueMatches = Array.from(new Map(playerMatches.map(m => [m.MatchID, m])).values());
+  
+          row.push(uniqueMatches.length > 0 ? uniqueMatches.map(match => `${match.Date} - ${match.Tournament}`).join("\n") : "No Matches");
+        });
+  
+        wsData.push(row);
+      });
+  
+      wsData.push([]); // Add an empty row for spacing between events
+    });
+  
+    // Convert data to Excel sheet
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+  
+    // Auto-fit columns
+    ws['!cols'] = wsData[0].map(() => ({ wch: 30 }));
+  
+    // Merge event headers across filter sets
+    ws['!merges'] = ws['!merges'] || [];
+    wsData.forEach((row, i) => {
+      if (row.length === 1) {
+        ws['!merges'].push({ s: { r: i, c: 0 }, e: { r: i, c: filters.length } });
+      }
+    });
+  
+    XLSX.utils.book_append_sheet(wb, ws, "Matches");
+    XLSX.writeFile(wb, "Matches.xlsx");
   };
 
   return (
@@ -285,7 +325,7 @@ const Matches = () => {
                 width: '100%',
                 borderCollapse: 'collapse',
                 textAlign: 'left',
-                height: '400px', // Set a fixed height for the table body
+                height: '600px', // Set a fixed height for the table body
                 overflowY: 'auto', // Enables scrolling
                 display: 'block', // Ensures the table body is scrollable
               }}
