@@ -135,7 +135,7 @@ const Matches = () => {
           const playerMatches = (groupedByPlayer[player] || []).filter(match => match.Event === event);
           const uniqueMatches = Array.from(new Map(playerMatches.map(m => [m.MatchID, m])).values());
   
-          row.push(uniqueMatches.length > 0 ? uniqueMatches.map(match => `${match.Date} - ${match.Tournament}`).join("\n") : "No Matches");
+          row.push(uniqueMatches.length > 0 ? uniqueMatches.map(match => `${match.Date} - ${match.Tournament}`).join("\n") : "");
         });
   
         wsData.push(row);
@@ -317,119 +317,136 @@ const Matches = () => {
           Object.values(groupedByPlayer).flat().forEach(match => allEvents.add(match.Event));
         });
 
-        return (
-          <div className="matches-container" style={{ padding: '20px' }}>
-            {/* Create a table with player names in the first column and each filter set as a separate column */}
-            <table
-              style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                textAlign: 'left',
-                height: '600px', // Set a fixed height for the table body
-                overflowY: 'auto', // Enables scrolling
-                display: 'block', // Ensures the table body is scrollable
-              }}
-              border="1"
-            >
-              <thead
-                style={{
-                  backgroundColor: '#3498db',
-                  color: '#fff',
-                  position: 'sticky', // This makes the header sticky
-                  top: 0, // Keeps the header at the top when scrolling
-                  zIndex: 1, // Ensures the header stays on top of the table rows
-                }}
-              >
-                <tr>
-                  <th style={{ padding: '10px' }}>Player</th>
-                  {filters.map((filter, index) => (
-                    <th key={index} style={{ padding: '10px' }}>
-                      {filter.title}
-                    </th>
-                  ))}
+        // Define round hierarchy
+const roundHierarchy = {
+  "Final": 5,
+  "Semi-Final": 4,
+  "Quarter-Final": 3,
+  "Round of 16": 2,
+  "Round of 32": 1,
+};
+
+// Sorting function for matches
+const sortMatches = (a, b) => {
+  const dateA = new Date(a.Date);
+  const dateB = new Date(b.Date);
+
+  // If dates are different, sort by date
+  if (dateA - dateB !== 0) return dateA - dateB;
+
+  // If dates are the same, sort by round priority (higher number = later round)
+  return (roundHierarchy[a.Round] || 0) - (roundHierarchy[b.Round] || 0);
+};
+
+return (
+  <div className="matches-container" style={{ padding: '20px' }}>
+    <table
+      style={{
+        width: '100%',
+        borderCollapse: 'collapse',
+        textAlign: 'left',
+        height: '600px',
+        overflowY: 'auto',
+        display: 'block',
+      }}
+      border="1"
+    >
+      <thead
+        style={{
+          backgroundColor: '#3498db',
+          color: '#fff',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1,
+        }}
+      >
+        <tr>
+          <th style={{ padding: '10px' }}>Player</th>
+          {filters.map((filter, index) => (
+            <th key={index} style={{ padding: '10px' }}>{filter.title}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {[...allEvents].map((event) => (
+          <React.Fragment key={event}>
+            <tr>
+              <td colSpan={matchesByFilterSet.length + 1} style={{ backgroundColor: '#2c3e50', color: '#fff', fontWeight: 'bold', textAlign: 'center', padding: '10px' }}>
+                {event}
+              </td>
+            </tr>
+
+            {[...allPlayers].map((player) => {
+              const playerHasMatchesInEvent = matchesByFilterSet.some(({ groupedByPlayer }) =>
+                (groupedByPlayer[player] || []).some(match => match.Event === event)
+              );
+
+              if (!playerHasMatchesInEvent) return null;
+
+              return (
+                <tr key={player}>
+                  <td style={{ padding: '10px', fontWeight: 'bold' }}>{player}</td>
+
+                  {matchesByFilterSet.map(({ groupedByPlayer }, filterIndex) => {
+  const playerMatches = (groupedByPlayer[player] || []).filter(match => match.Event === event);
+
+  if (playerMatches.length === 0) return <td key={filterIndex} style={{ padding: '10px' }}>No Matches</td>;
+
+  // Sort matches based on hierarchy
+  const sortedMatches = playerMatches.sort(sortMatches);
+  const lastMatch = sortedMatches[sortedMatches.length - 1]; // Get highest priority match
+
+  const team1Players = JSON.parse(lastMatch.Team1_Names);
+  const team2Players = JSON.parse(lastMatch.Team2_Names);
+
+  let playerSide, opponentSide;
+  let partner = null;
+  let playerTeam = 0; // 1 = Team 1, 2 = Team 2
+
+  if (team1Players.includes(player)) {
+    playerSide = team1Players;
+    opponentSide = team2Players;
+    playerTeam = 1;
+  } else {
+    playerSide = team2Players;
+    opponentSide = team1Players;
+    playerTeam = 2;
+  }
+
+  if (playerSide.length > 1) {
+    partner = playerSide.find(p => p !== player);
+  }
+
+  // Determine if this is a final and if the player won
+  let finalStatus = "";
+let matchRound = lastMatch.Round; // Default to showing the round
+
+if (lastMatch.Round === "Final") {
+  if (lastMatch.Winner === String(playerTeam)) {
+    finalStatus = "Won";
+    matchRound = ""; // Omit round if they won
+  } else {
+    finalStatus = "Final";
+  }
+}
+
+const matchInfo = `${matchRound} ${lastMatch.Age} ${lastMatch.Level} ${new Date(lastMatch.Date).toLocaleString('default', { month: 'long', year: 'numeric' })}`.trim();
+
+return (
+  <td key={filterIndex} style={{ padding: '10px' }}>
+    {finalStatus ? `${finalStatus}: ` : ""}{partner ? `${matchInfo} w/: ${partner}` : matchInfo}
+  </td>
+);
+})}
                 </tr>
-              </thead>
-              <tbody>
-                {[...allEvents].map((event) => (
-                  <React.Fragment key={event}>
-                    {/* Event Header Row */}
-                    <tr>
-                      <td colSpan={matchesByFilterSet.length + 1} style={{ backgroundColor: '#2c3e50', color: '#fff', fontWeight: 'bold', textAlign: 'center', padding: '10px' }}>
-                        {event}
-                      </td>
-                    </tr>
-
-                    {/* Players in this Event */}
-                    {[...allPlayers].map((player) => {
-                      const playerHasMatchesInEvent = matchesByFilterSet.some(({ groupedByPlayer }) =>
-                        (groupedByPlayer[player] || []).some(match => match.Event === event)
-                      );
-
-                      if (!playerHasMatchesInEvent) return null; // Skip player if they have no matches in this event
-
-                      return (
-                        <tr key={player}>
-                          {/* Player Name Column */}
-                          <td style={{ padding: '10px', fontWeight: 'bold' }}>{player}</td>
-
-                          {/* Matches for each filter set */}
-                          {matchesByFilterSet.map(({ groupedByPlayer }, filterIndex) => {
-                            const playerMatches = (groupedByPlayer[player] || []).filter(match => match.Event === event);
-                            const uniqueMatches = Array.from(new Map(playerMatches.map(m => [m.MatchID, m])).values());
-
-                            return (
-                              <td key={filterIndex} style={{ padding: '10px' }}>
-                                {uniqueMatches.length > 0 ? (
-                                  <table style={{ width: '100%', borderCollapse: 'collapse' }} border="1">
-                                    <thead>
-                                      <tr>
-                                        <th>Date</th>
-                                        <th>Tournament</th>
-                                        <th>Players</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {uniqueMatches.map((match) => {
-                                        const team1Players = JSON.parse(match.Team1_Names);
-                                        const team2Players = JSON.parse(match.Team2_Names);
-
-                                        let playerSide, opponentSide;
-
-                                        if (team1Players.includes(player)) {
-                                          playerSide = team1Players;
-                                          opponentSide = team2Players;
-                                        } else {
-                                          playerSide = team2Players;
-                                          opponentSide = team1Players;
-                                        }
-
-                                        return (
-                                          <tr key={match.MatchID}>
-                                            <td>{match.Date}</td>
-                                            <td>{match.Tournament}</td>
-                                            <td>
-                                              <strong>{player}</strong>, {playerSide.filter(p => p !== player).join(", ")} vs {opponentSide.join(", ")}
-                                            </td>
-                                          </tr>
-                                        );
-                                      })}
-                                    </tbody>
-                                  </table>
-                                ) : (
-                                  <span>No Matches</span>
-                                )}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
+              );
+            })}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
       })()}
     </div>
   );
