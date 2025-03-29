@@ -31,3 +31,4 @@ package-lock.json
 frontend/node_modules/
 frontend/build/
 backend/database/all_matches.sql
+config
